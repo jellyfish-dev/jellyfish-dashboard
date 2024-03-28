@@ -1,4 +1,4 @@
-import { JellyfishClient } from "@jellyfish-dev/react-client-sdk";
+import { Client } from "@jellyfish-dev/react-client-sdk";
 import { useEffect } from "react";
 import { settingsSelectorAtom } from "./LogSelector";
 import { useAtom } from "jotai";
@@ -18,7 +18,7 @@ const onEncodingChangedAtom = settingsSelectorAtom("onEncodingChanged");
 const onVoiceActivityChangedAtom = settingsSelectorAtom("onVoiceActivityChanged");
 
 // TODO: refactor this
-export const useLogging = <P, T>(client: JellyfishClient<P, T> | null) => {
+export const useLogging = <P, T>(client: Client<P, T> | null) => {
   const [onJoinErrorLog] = useAtom(onJoinErrorAtom);
   const [onJoinSuccessLog] = useAtom(onJoinSuccessAtom);
   const [onPeerJoinedLog] = useAtom(onPeerJoinedAtom);
@@ -146,7 +146,6 @@ export const useLogging = <P, T>(client: JellyfishClient<P, T> | null) => {
     client.on("trackRemoved", onTrackRemoved);
     client.on("trackUpdated", onTrackUpdated);
     client.on("bandwidthEstimationChanged", onBandwidthEstimationChanged);
-    client.on("tracksPriorityChanged", onTracksPriorityChanged);
 
     client.on("authError", onAuthError);
     client.on("connectionError", onConnectionError);
@@ -164,7 +163,6 @@ export const useLogging = <P, T>(client: JellyfishClient<P, T> | null) => {
       client.off("trackRemoved", onTrackRemoved);
       client.off("trackUpdated", onTrackUpdated);
       client.off("bandwidthEstimationChanged", onBandwidthEstimationChanged);
-      client.off("tracksPriorityChanged", onTracksPriorityChanged);
 
       client.off("authError", onAuthError);
       client.off("connectionError", onConnectionError);

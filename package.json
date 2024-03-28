@@ -17,7 +17,7 @@
     "lint:check": "eslint . --ext .ts,.tsx"
   },
   "dependencies": {
-    "@jellyfish-dev/react-client-sdk": "^0.2.0",
+    "@jellyfish-dev/react-client-sdk": "file:../react-client-sdk",
     "@types/chartist": "^1.0.0",
     "@types/ramda": "^0.29.10",
     "axios": "^1.6.7",

@@ -38,8 +38,8 @@ export const StreamedTrackCard = ({
     trackInfo.encodings?.includes("h") || false,
   ]);
 
-  const client = state.rooms[roomId].peers[peerId].client;
-  const api = client.useSelector((s) => s.connectivity.api);
+  const createReactClientResult = state.rooms[roomId].peers[peerId].client;
+  const reactClient = createReactClientResult.useSelector((s) => s.client);
 
   const simulcast = useState<boolean>(simulcastTransfer);
   const [expandedTrackId, setExpandedTrackId] = useState<boolean>(false);
@@ -52,7 +52,7 @@ export const StreamedTrackCard = ({
     const metadata = checkJSON(newTrackMetadata) ? JSON.parse(newTrackMetadata) : null;
     const trackId = trackInfo.serverId;
     if (!trackId) throw new Error("Server id is not present!");
-    api?.updateTrackMetadata(trackId, metadata);
+    reactClient?.updateTrackMetadata(trackId, metadata);
     setUserTracksMetadata((prev) => ({
       ...(prev ? prev : {}),
       [trackId]: metadata,

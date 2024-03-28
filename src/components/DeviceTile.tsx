@@ -21,7 +21,7 @@ export const DeviceTile = ({ selectedId, setSelectedId, streamInfo, id }: Props)
   const isVideo = streamInfo.stream.getVideoTracks().length > 0;
   const [enabled, setEnabled] = useState<boolean>(true);
   const peer = state.rooms[state.selectedRoom || ""].peers[id];
-  const api = peer.client.useSelector((state) => state.connectivity.api);
+  const reactClient = peer.client.useSelector((state) => state.client);
   const track = peer.tracks[streamInfo.id];
   const setActiveLocalCameras = useSetAtom(activeLocalCamerasAtom);
 
@@ -69,9 +69,9 @@ export const DeviceTile = ({ selectedId, setSelectedId, streamInfo, id }: Props)
       </button>
       <CloseButton
         descripiton="STOP STREAM AND REMOVE TRACKS"
-        onClick={() => {
+        onClick={async () => {
           if (track.serverId) {
-            api?.removeTrack(track.serverId);
+            await reactClient?.removeTrack(track.serverId);
           }
           if (track.source === "navigator" && track.type === "video") {
             setActiveLocalCameras((prev) => prev - 1);
